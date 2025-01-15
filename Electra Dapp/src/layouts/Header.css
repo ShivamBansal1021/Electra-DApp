@@ -1,0 +1,11 @@
+.silkscreen-regular {
+    font-family: "Silkscreen", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.header{
+    height: 10vh;
+    font-size: 3rem;
+    display: flex;
+    justify-content: center;
+}

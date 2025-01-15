@@ -1,0 +1,70 @@
+.elections-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    overflow-x: auto;
+}
+
+.elections-table th, .elections-table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.elections-table thead th {
+    background-color: #1e1e1e;
+    color: #f5f5f5;
+    border-bottom: 2px solid #333;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.elections-table tbody tr {
+    border-bottom: 1px solid #333;
+}
+
+.elections-table tbody tr:nth-child(odd) {
+    background-color: #1e1e1e;
+}
+
+.elections-table tbody tr:nth-child(even) {
+    background-color: #2c2c2c;
+}
+
+.elections-table tbody tr:hover {
+    background-color: #333333;
+    cursor: pointer;
+}
+
+.activate-button, .deactivate-button {
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.activate-button {
+    background-color: #4caf50;
+}
+
+.activate-button:hover {
+    background-color: #45a049;
+}
+
+.deactivate-button {
+    background-color: #f44336;
+}
+
+.deactivate-button:hover {
+    background-color: #e53935;
+}
+
+.error-message {
+    color: #ff5252;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+}
