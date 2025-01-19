@@ -6,10 +6,12 @@ import { useState,useEffect } from 'react';
 import { BrowserProvider, Contract } from 'ethers'
 import Typography from '@mui/material/Typography';
 import { abi, contractAddress } from '../contracts/VotingSystem.json'
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function AddCandidate() {
     const provider = new BrowserProvider(window.ethereum);
     const [address, setAddress] = useState(null);
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
             const connectMetamask = async () => {
                 const signer = await provider.getSigner();
@@ -28,9 +30,13 @@ export default function AddCandidate() {
         const signer = await provider.getSigner()
         const instance = new Contract(contractAddress, abi, signer)
         try{
+            setLoading(true);
             const trx = await instance.addCandidate(Data.electionId,Data.name);
+            await trx.wait();
+            setLoading(false);
             alert("Candidate Added");
         }catch(e){
+            setLoading(false);
             alert(e);
         }
     }
@@ -48,6 +54,11 @@ export default function AddCandidate() {
                 }}
             >
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}><Typography variant="body1" component="h2">Connected Account: <strong>{address}</strong></Typography></div>
+                {loading ? (
+                                          <Box sx={{ display: 'flex',justifyContent:'center' }}>
+                                          <CircularProgress />
+                                        </Box>
+                                      ):
                 <form>
                     <div style={{ textAlign: 'center' }}><h1>Add Candidate</h1></div>
 
@@ -86,6 +97,7 @@ export default function AddCandidate() {
                     <br /><br />
                     <div style={{ display: 'flex', justifyContent: 'center' }}><Button onClick={handleSubmit} variant="contained" size='large'>Submit</Button></div>
                 </form>
+}
             </Box>
         </>
     )

@@ -67,11 +67,16 @@ export default function VotingPage() {
 
     const vote = async (id)=>{
         try{
+            setLoading(true);
             const signer = await provider.getSigner()
             const instance = new Contract(contractAddress, abi, signer)
-            await instance.vote(eId,id);
+            const trx = await instance.vote(eId,id);
+            await trx.wait();
+            setLoading(false);
+            alert("Successfully Voted!");
         }
         catch(e){
+            setLoading(false);
             alert(e);
         }
     }

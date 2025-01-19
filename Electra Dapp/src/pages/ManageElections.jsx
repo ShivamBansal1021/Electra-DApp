@@ -51,10 +51,12 @@ export default function ManageElections() {
     // Handle activating an election
     const activateElection = async (id) => {
         try{
+            setLoading(true);
             const signer = await provider.getSigner()
             const instance = new Contract(contractAddress, abi, signer)
-            await instance.startElection(id);
-            fetchElections();
+            const tx = await instance.startElection(id);
+            await tx.wait();
+            await fetchElections();
         }catch(e){
             alert(e);
         }
@@ -63,10 +65,12 @@ export default function ManageElections() {
     // Handle deactivating an election
     const deactivateElection = async (id) => {
         try{
+            setLoading(true);
             const signer = await provider.getSigner()
             const instance = new Contract(contractAddress, abi, signer)
-            await instance.endElection(id);
-            fetchElections();
+            const tx = await instance.endElection(id);
+            await tx.wait();
+            await fetchElections();
         }catch(e){
             alert(e);
         }

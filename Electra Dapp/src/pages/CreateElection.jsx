@@ -5,11 +5,13 @@ import { useState, useEffect } from 'react';
 import { BrowserProvider, Contract } from 'ethers'
 import Typography from '@mui/material/Typography';
 import {abi, contractAddress} from '../contracts/VotingSystem.json'
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function CreateElection() {
 
   const provider = new BrowserProvider(window.ethereum);
       const [address, setAddress] = useState(null);
+      const [loading, setLoading] = useState(false);
 
       useEffect(() => {
               const connectMetamask = async () => {
@@ -29,9 +31,13 @@ export default function CreateElection() {
         const signer = await provider.getSigner()
         const instance = new Contract(contractAddress, abi, signer)
         try{
+          setLoading(true);
           const trx = await instance.createElection(Data.post,Data.startTime,Data.endTime);
+          await trx.wait();
+          setLoading(false);
           alert("Election Created");
         }catch(e){
+          setLoading(false);
           alert(e);
         }
     }
@@ -49,6 +55,11 @@ export default function CreateElection() {
           }}
         >
           <div style={{display:'flex',justifyContent:'center',marginTop:'2rem'}}><Typography variant="body1" component="h2">Connected Account: <strong>{address}</strong></Typography></div>
+          {loading ? (
+                          <Box sx={{ display: 'flex',justifyContent:'center' }}>
+                          <CircularProgress />
+                        </Box>
+                      ):
             <form>
                 <div style={{textAlign:'center'}}><h1>Create Election</h1></div>
                 <div><label style={{fontSize:'1.25rem'}} htmlFor='post'>Election Post </label>&nbsp;&nbsp;
@@ -59,6 +70,7 @@ export default function CreateElection() {
                 <input onChange={(e) => setData({...Data, endTime: ((new Date(e.target.value)).getTime())/1000})} style={{fontSize:'1.25rem'}} id='endTime' type='datetime-local'></input></div><br/><br/>
                 <div style={{display:'flex',justifyContent:'center'}}><Button onClick={handleSubmit} variant="contained" size='large'>Submit</Button></div>
             </form>
+}
         </Box>
         </>
     )
