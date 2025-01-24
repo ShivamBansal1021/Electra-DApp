@@ -5,12 +5,6 @@ Electra DApp is a decentralized voting dApp. It makes the entire election proces
 
 ---
 
-## Features
--
-
-
----
-
 ## Technologies used
 - [Node.js](https://nodejs.org/)
 - [Hardhat](https://hardhat.org/): Development environment for Ethereum.
